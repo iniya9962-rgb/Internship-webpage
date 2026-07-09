@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
+    <style>
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            background: #f4f4f4;
+        }
+
+        .dashboard-sidebar {
+            width: 250px;
+            background: #0d6efd;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-sidebar h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .dashboard-sidebar ul {
+            list-style: none;
+        }
+
+        .dashboard-sidebar ul li {
+            padding: 12px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .dashboard-sidebar ul li:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-sidebar ul li.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: bold;
+        }
+
+        .dashboard-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .dashboard-header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-header h2 {
+            color: #0d6efd;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-card h3 {
+            color: #0d6efd;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-card p {
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card h4 {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            color: #0d6efd;
+            font-weight: bold;
+        }
+
+        .internship-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .internship-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #0d6efd;
+        }
+
+        .internship-item h4 {
+            color: #0d6efd;
+            margin-bottom: 10px;
+        }
+
+        .apply-btn {
+            background: #0d6efd;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        .apply-btn:hover {
+            background: #0b5ed7;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="dashboard-sidebar">
+            <h3>Dashboard</h3>
+            <ul>
+                <li class="menu-item active" onclick="showSection('overview')">📊 Overview</li>
+                <li class="menu-item" onclick="showSection('profile')">👤 My Profile</li>
+                <li class="menu-item" onclick="showSection('internships')">💼 Internships</li>
+                <li class="menu-item" onclick="showSection('applications')">📝 My Applications</li>
+                <li class="menu-item" onclick="showSection('settings')">⚙️ Settings</li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="dashboard-content">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <div>
+                    <h2>Welcome, <span id="studentName">Student</span>!</h2>
+                    <p style="color: #666;">Internship Portal Dashboard</p>
+                </div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+
+            <!-- Overview Section -->
+            <div id="overview" class="section">
+                <div class="stats">
+                    <div class="stat-card">
+                        <h4>Applied Internships</h4>
+                        <div class="stat-number">3</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Shortlisted</h4>
+                        <div class="stat-number">1</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Profile Views</h4>
+                        <div class="stat-number">12</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Recent Internship Opportunities</h3>
+                    <div class="internship-list">
+                        <div class="internship-item">
+                            <h4>Frontend Developer Internship</h4>
+                            <p><strong>Company:</strong> Tech Startup XYZ</p>
+                            <p><strong>Duration:</strong> 3 Months</p>
+                            <p><strong>Stipend:</strong> ₹5,000/Month</p>
+                            <button class="apply-btn">Apply Now</button>
+                        </div>
+                        <div class="internship-item">
+                            <h4>Backend Developer Internship</h4>
+                            <p><strong>Company:</strong> Software Solutions Inc</p>
+                            <p><strong>Duration:</strong> 6 Months</p>
+                            <p><strong>Stipend:</strong> ₹7,000/Month</p>
+                            <button class="apply-btn">Apply Now</button>
+                        </div>
+                        <div class="internship-item">
+                            <h4>Data Science Internship</h4>
+                            <p><strong>Company:</strong> AI Labs</p>
+                            <p><strong>Duration:</strong> 4 Months</p>
+                            <p><strong>Stipend:</strong> ₹6,000/Month</p>
+                            <button class="apply-btn">Apply Now</button>
+                        </div>
+                        <div class="internship-item">
+                            <h4>UI/UX Design Internship</h4>
+                            <p><strong>Company:</strong> Design Studio Co</p>
+                            <p><strong>Duration:</strong> 3 Months</p>
+                            <p><strong>Stipend:</strong> ₹4,500/Month</p>
+                            <button class="apply-btn">Apply Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profile" class="section hide">
+                <div class="dashboard-card">
+                    <h3>My Profile</h3>
+                    <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+                    <p><strong>Email:</strong> <span id="profileEmail">Loading...</span></p>
+                    <p><strong>Phone:</strong> <span id="profilePhone">Loading...</span></p>
+                    <p><strong>College:</strong> <span id="profileCollege">Loading...</span></p>
+                    <p><strong>Course:</strong> <span id="profileCourse">Loading...</span></p>
+                    <p><strong>Skills:</strong> <span id="profileSkills">Loading...</span></p>
+                    <button class="apply-btn" onclick="alert('Edit profile feature coming soon!')">Edit Profile</button>
+                </div>
+            </div>
+
+            <!-- Internships Section -->
+            <div id="internships" class="section hide">
+                <div class="dashboard-card">
+                    <h3>Available Internships</h3>
+                    <div class="internship-list">
+                        <div class="internship-item">
+                            <h4>Mobile App Developer</h4>
+                            <p><strong>Company:</strong> AppWorks Ltd</p>
+                            <p><strong>Location:</strong> Remote</p>
+                            <p><strong>Duration:</strong> 5 Months</p>
+                            <button class="apply-btn">Apply Now</button>
+                        </div>
+                        <div class="internship-item">
+                            <h4>Cloud Engineer</h4>
+                            <p><strong>Company:</strong> CloudTech Services</p>
+                            <p><strong>Location:</strong> Bangalore</p>
+                            <p><strong>Duration:</strong> 6 Months</p>
+                            <button class="apply-btn">Apply Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Section -->
+            <div id="applications" class="section hide">
+                <div class="dashboard-card">
+                    <h3>My Applications</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #f0f0f0; border-bottom: 2px solid #0d6efd;">
+                                <th style="padding: 10px; text-align: left;">Company</th>
+                                <th style="padding: 10px; text-align: left;">Position</th>
+                                <th style="padding: 10px; text-align: left;">Status</th>
+                                <th style="padding: 10px; text-align: left;">Applied On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px;">Tech Startup XYZ</td>
+                                <td style="padding: 10px;">Frontend Developer</td>
+                                <td style="padding: 10px;"><span style="background: #d4edda; padding: 5px 10px; border-radius: 3px;">Shortlisted</span></td>
+                                <td style="padding: 10px;">2026-07-05</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px;">Software Solutions</td>
+                                <td style="padding: 10px;">Backend Developer</td>
+                                <td style="padding: 10px;"><span style="background: #fff3cd; padding: 5px 10px; border-radius: 3px;">Pending</span></td>
+                                <td style="padding: 10px;">2026-07-04</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px;">AI Labs</td>
+                                <td style="padding: 10px;">Data Science</td>
+                                <td style="padding: 10px;"><span style="background: #f8d7da; padding: 5px 10px; border-radius: 3px;">Not Selected</span></td>
+                                <td style="padding: 10px;">2026-07-03</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="section hide">
+                <div class="dashboard-card">
+                    <h3>Settings</h3>
+                    <p><strong>Account Settings</strong></p>
+                    <p>Change your password, email preferences, and notification settings here.</p>
+                    <button class="apply-btn" onclick="alert('Settings coming soon!')">Manage Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load student data from localStorage
+        function loadStudentData() {
+            const studentData = JSON.parse(localStorage.getItem('studentData'));
+            if (studentData) {
+                document.getElementById('studentName').textContent = studentData.name;
+                document.getElementById('profileName').textContent = studentData.name;
+                document.getElementById('profileEmail').textContent = studentData.email;
+                document.getElementById('profilePhone').textContent = studentData.phone;
+                document.getElementById('profileCollege').textContent = studentData.college;
+                document.getElementById('profileCourse').textContent = studentData.course;
+                document.getElementById('profileSkills').textContent = studentData.skills;
+            }
+        }
+
+        // Show section based on menu click
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.add('hide');
+            });
+
+            // Remove active from all menu items
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hide');
+
+            // Mark menu item as active
+            event.target.classList.add('active');
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('studentData');
+            localStorage.removeItem('studentEmail');
+            alert('Logged out successfully!');
+            window.location.href = 'index.html';
+        }
+
+        // Load data on page load
+        window.addEventListener('DOMContentLoaded', loadStudentData);
+    </script>
+</body>
+
+</html>
