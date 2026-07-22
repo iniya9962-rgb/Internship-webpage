@@ -124,4 +124,14 @@ app.get("/users", (req, res) => {
 
 // ================= START SERVER =================
 
+const PORT = process.env.PORT || 3000;
+
+// Only start listening when run directly (e.g. `node server.js`).
+// Platforms like Vercel import `app` as a serverless handler instead.
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Server Running on Port ${PORT}`);
+    });
+}
+
 module.exports = app;

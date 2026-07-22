@@ -1,5 +1,27 @@
 {
   "dependencies": {
-    "@vercel/node": "^5.8.22"
-  }
+    "@vercel/node": "^5.8.22",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "mysql2": "^3.22.6"
+  },
+  "name": "internshipportal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iniya9962-rgb/Internship-webpage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iniya9962-rgb/Internship-webpage/issues"
+  },
+  "homepage": "https://github.com/iniya9962-rgb/Internship-webpage#readme"
 }
