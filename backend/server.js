@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const db = require("./db");
 
 const app = express();
@@ -10,8 +11,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // ================= HOME =================
 
+app.use(express.static(path.join(__dirname, "../frontend")));
+
 app.get("/", (req, res) => {
-    res.send("Server Working");
+    res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
 // ================= SIGNUP =================
